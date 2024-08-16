@@ -1,0 +1,38 @@
+name: 'Release Github'
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'content/**'
+      - 'Shotgun.Templates.csproj'
+    branches:
+      - main
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 100
+
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.x'
+
+      - id: generate-version
+        uses: paulhatch/semantic-version@v5.4.0
+        with:
+          bump_each_commit: true         
+
+      - name: Run dotnet pack
+        run: |
+          VERSION=${{ steps.generate-version.outputs.version }}
+          dotnet pack -c Release -p:PackageVersion=${VERSION#v}
+
+      - name: Push package to Nuget
+        run: dotnet nuget push bin/Release/*.nupkg -k ${{ secrets.GITHUB_PAT }} -s 'github'
+      
