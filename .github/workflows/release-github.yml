@@ -34,5 +34,5 @@ jobs:
           dotnet pack -c Release -p:PackageVersion=${VERSION#v}
 
       - name: Push package to Nuget
-        run: dotnet nuget push bin/Release/*.nupkg -k ${{ secrets.GITHUB_PAT }} -s 'github'
+        run: dotnet nuget push bin/Release/*.nupkg -k ${{ secrets.GH_PAT }} -s 'github'
       
