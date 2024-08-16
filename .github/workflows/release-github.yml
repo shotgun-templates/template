@@ -34,5 +34,7 @@ jobs:
           dotnet pack -c Release -p:PackageVersion=${VERSION#v}
 
       - name: Push package to Nuget
-        run: dotnet nuget push bin/Release/*.nupkg -k ${{ secrets.GH_PAT }} -s 'github'
+        run: |
+          dotnet nuget add source --username shotgun-templates --password ${{ secrets.GH_PAT }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/shotgun-templates/index.json"
+          dotnet nuget push bin/Release/*.nupkg -k ${{ secrets.GH_PAT }} -s 'github'
       
