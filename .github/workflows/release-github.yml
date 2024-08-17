@@ -35,7 +35,7 @@ jobs:
 
       - name: Push to Github Packages
         run: |
-          dotnet nuget add source --username shotgun-templates --password ${{ secrets.GH_PAT }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/shotgun-templates/index.json"
+          dotnet nuget add source --username shotgun-templates --password ${{ secrets.GH_PAT }} --store-password-in-clear-text --skip-duplicate --name github "https://nuget.pkg.github.com/shotgun-templates/index.json"
           dotnet nuget push bin/Release/*.nupkg -k ${{ secrets.GH_PAT }} -s 'github'
       
       - name: Delete older versions
