@@ -17,7 +17,8 @@
       "exclude": [
         ".idea/**",
         ".vscode/**",
-        ".vs/**"
+        ".vs/**",
+        ".template.config/**"
       ]
     }
   ]
