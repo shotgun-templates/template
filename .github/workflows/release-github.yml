@@ -42,6 +42,7 @@ jobs:
         uses: actions/delete-package-versions@v5
         with:
           package-name: Shotgun.Templates
+          package-type: nuget
           min-versions-to-keep: 5
           token: ${{ secrets.GH_PAT }}
       
